@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Welcome, {{ user.username }} ({{ user.role|title }})</h2>
+
+{% if user.role == 'admin' %}
+  <p><a href="{% url 'register_student' %}">Register New Student</a></p>
+  <p><strong>Admin Dashboard</strong> - more coming soon!</p>
+{% elif user.role == 'lecturer' %}
+  <p><strong>Lecturer Dashboard</strong> - coming soon</p>
+{% elif user.role == 'student' %}
+  <p><a href="{% url 'my_results' %}">View My Results</a></p>
+{% endif %}
+
+{% if user.role == 'admin' %}
+  <h3>Admin Dashboard</h3>
+  <ul>
+    <li>Total Students: {{ total_students }}</li>
+    <li>Total Courses: {{ total_courses }}</li>
+    <li>Total Results Uploaded: {{ total_results }}</li>
+  </ul>
+{% endif %}
+
+<!-- Logout Button -->
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>  
+
+{% endblock %}
+
